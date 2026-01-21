@@ -1,0 +1,72 @@
+---
+title: The Claude Code Era
+date: 2026-01-21
+description: A eulogy for the old way of software engineering
+categories: ["ai"]
+---
+
+I would be lying if I said I write 50% of the code that I ship into production, these days.
+
+I would *still* be lying if I said I write 20% of that code.
+
+No, I am handwriting less than 10% of what I deploy. This should end in disaster - a giant ball of spaghetti. But somehow, it's working. And how fast I can ship is only *increasing*.
+
+This is downstream of software engineering entering a new era, one defined by [Claude Code](https://claude.ai/code) and [those](https://developers.openai.com/codex) [like](https://opencode.ai/) [it](https://ampcode.com/).
+
+## Year of Agents
+
+When 2025 was proclaimed the "[year of agents](https://x.com/gdb/status/1879327050819104778)", I didn't buy it. At the time, I was still writing the majority of my code by hand with [Cursor](https://cursor.com).
+
+Agent mode was *okay*, at best. Each line it produced had to be scrutinized. The LLM was most helpful as a quick documentation lookup, or as an intelligent "find-and-replace" for boilerplate.
+
+The model of choice was Claude 3.5 Sonnet[^1]. It's hard to explain, but you could tell that the model had "taste", which I can't remember any previous models having. After using 3.5 for awhile, you'd start to daydream about where this whole LLM thing was going.
+
+Turns out Anthropic was thinking the exact same thing; they decided to pair the [Sonnet 3.7 release](https://www.anthropic.com/news/claude-3-7-sonnet) with a new terminal interface for working with Claude, locally, on your filesystem.
+
+## Bad Vibes
+
+Honestly, I was not a fan of Sonnet 3.7. It had some strange regressions compared to 3.5 that made me avoid it. Like frequently stopping mid-task to request more permission, or overengineering otherwise simple React components. The "taste" was missing. Since the model was a dud, I assumed the CLI was too.
+
+Meanwhile, [vibecoding](https://x.com/karpathy/status/1886192184808149383) was gaining momentum. I kept writing my code by hand. After all, for the first five years of my career there *was no other way*. The best method I had found to learn programming (or anything, really) was to take something apart piece-by-piece, and understand every word of syntax needed to make that product work.
+
+When [GPT-4 was released](https://openai.com/index/gpt-4-research/) in early 2023, I tried to leverage it as much as I could. Reflecting now, that was a mistake. Copy-and-pasting files of React and TypeScript back and forth was insanely inefficient, and the output quality was just not there. I would have been better served by ignoring LLMs for another year, and instead maximizing my time in the `$EDITOR`.
+
+## Shipping Is Believing
+
+What drew my attention back to Claude Code was [this post](https://steipete.me/post-s/2025/claude-code-is-my-computer) by [Peter Steinberger](https://x.com/steipete)[^2]. His descriptions of using Claude as a "natural language terminal" got me to take a second look. That, plus the release of [Sonnet 4](https://www.anthropic.com/news/claude-4) in May, finally unlocked the workflow for me. And the difference was huge:
+
+Since June, `ccusage` shows my total usage at over **7.5 billion tokens** - at API cost just under $8000. I've been on the 20x Max plan the entire way, so the actual bill is thankfully much lower.
+
+My rate of commits has roughly doubled, and we can prototype, test, and ship new features for Bracky[^3] almost daily. The hardest part is no longer engineering, but actually deciding *what* to build.
+
+## Mourning What Was
+
+Each new model reinforces this paradigm further. Opus 4.1, then Sonnet 4.5, then Opus 4.5. Each time Anthropic (or OpenAI with Codex, I'm told) unveils a new generation, more and more of the actual programming work is erased.
+
+I started programming because I enjoyed the process of writing code. It was a way for me to be "logically creative", since I've never been gifted artistically. But since Opus 4.5, I barely use my editor[^4] anymore.
+
+Nowadays, features start as a long voice prompt[^5] in the terminal, iterated into a thorough `PLAN.md` spec, then implemented by Claude. Weeks of work collapse to hours. My primary job now is designing the overall system, crafting feature specs, and reviewing the generated code.
+
+I will miss handwriting code. It was incredibly satisfying to nail the correct structure that accomplished the task while remaining clean and easy to understand. But I won't pretend we can go back.
+
+Think about GPS. We used to need to read maps, memorize a route, understand landmarks. Now you decide where to go, not how to get there. The old knowledge mattered. It was even fun, in its way. But nobody argues we should return to paper maps.
+
+The primary challenge has always been knowing what to build. Claude Code frees us to focus on that.
+
+## Year of Agency
+
+We are starting 2026 with (mostly) synchronous agents that we need to be present to control. I usually can manage 2-3 sessions at once, though others swear by orchestrating 10+ agents at a time; having them run for hours and hours without any supervision.
+
+My one AI prediction for this year: by the end of 2026, I believe the frontier will move from synchronous to asynchronous agents by default. Steinberger's [Clawdbot](https://clawdbot.com) is a first glimpse.
+
+What matters now is knowing **what** to build, and having the **agency** to build it. These tools aren't evenly distributed yet. Those who harness them effectively will have an edge - for the next few years, at least.
+
+[^1]: What a generational run by Anthropic. 3.5 was the default choice of ~everyone for almost a full year. I doubt that dynamic will ever repeat.
+
+[^2]: Peter is honestly a gem, and I've learned so much from his posts and blog. Definitely worth a follow on Twitter.
+
+[^3]: Our AI agent powered by prediction markets. Check it out [here](https://bracky.app/home)!
+
+[^4]: I use [Zed](https://zed.dev), btw.
+
+[^5]: [Aqua](https://aquavoice.com) has been my goto for transcription, but local options appear to be [getting very good](https://x.com/BHolmesDev/status/2011513814093894128).
