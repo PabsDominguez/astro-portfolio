@@ -125,7 +125,18 @@
   }
 }
 
-/* Prose link hover */
+/* Links */
+a {
+  text-decoration-color: oklch(from currentColor l c h / 50%);
+}
+
+.prose a {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: underline;
+  text-decoration-color: oklch(from currentColor l c h / 50%);
+}
+
 .prose a:hover {
   color: var(--brand) !important;
   text-decoration-color: var(--brand) !important;
@@ -140,4 +151,37 @@
 .twitter-tweet,
 .twitter-tweet-rendered {
   margin-inline: auto !important;
+}
+
+/* Footnotes */
+a[data-footnote-ref] {
+  @apply font-mono no-underline text-muted-foreground;
+}
+
+a[data-footnote-ref]::before {
+  content: "[";
+}
+
+a[data-footnote-ref]::after {
+  content: "]";
+}
+
+section[data-footnotes] {
+  @apply mt-12 pt-6 border-t border-border text-sm text-muted-foreground;
+}
+
+section[data-footnotes] ol {
+  @apply pl-4;
+}
+
+section[data-footnotes] li {
+  @apply mb-2;
+}
+
+a[data-footnote-backref] {
+  @apply no-underline ml-1;
+}
+
+a[data-footnote-backref]:hover {
+  color: var(--brand);
 }

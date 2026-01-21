@@ -1,5 +1,6 @@
 import { fileURLToPath } from "node:url"
 import mdx from "@astrojs/mdx"
+import remarkGfm from "remark-gfm"
 import sitemap from "@astrojs/sitemap"
 import vercel from "@astrojs/vercel"
 import tailwindcss from "@tailwindcss/vite"
@@ -25,6 +26,7 @@ export default defineConfig({
   }),
   output: "static",
   markdown: {
+    remarkPlugins: [remarkGfm],
     shikiConfig: {
       themes: {
         light: gruvboxLightHard as unknown as ThemeRegistration,
