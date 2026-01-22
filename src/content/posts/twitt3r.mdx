@@ -1,12 +1,16 @@
 ---
 title: Twitt3r.xyz
-date: "2022-08-24"
+date: 2022-08-24
 description: Building a decentralized Twitter clone on Ethereum
-image: https://github.com/maxpetretta/twitt3r.xyz/blob/master/demo.gif?raw=true
 categories: ["crypto"]
 ---
 
-<img src="https://github.com/maxpetretta/twitt3r.xyz/blob/master/demo.gif?raw=true" alt="A quick 60 second demo of twitt3r.xyz" width="650" height="458" loading="eager" class="mx-auto">
+import { Image } from 'astro:assets';
+import hardhatTests from '../images/hardhat-tests.png';
+import rainbowkit from '../images/rainbowkit.png';
+import ensProfile from '../images/ens-profile.png';
+
+<img src="https://github.com/maxpetretta/twitt3r.xyz/blob/master/demo.gif?raw=true" alt="A quick 60 second demo of twitt3r.xyz" width="650" height="458" loading="eager" fetchpriority="high" class="mx-auto" />
 
 **Introducing [Twitt3r.xyz](https://twitt3r.xyz), a decentralized Twitter clone built on the Ethereum blockchain.** Live now on [Goerli](https://goerli.etherscan.io/address/0x3493B7ABE5e6E142D632e6596bc550A73c87Ee79) and [Ropsten](https://ropsten.etherscan.io/address/0x3493B7ABE5e6E142D632e6596bc550A73c87Ee79) testnets. Connect your wallet, send tw33ts, and check out user profiles (with help from [ENS](https://ens.domains/)).
 
@@ -239,7 +243,7 @@ describe("New tweets", function () {
 
 We can test our functions in both the positive and negative cases, making sure that the `revert` conditions we set earlier act as expected. Here's the result of running all of our tests:
 
-![Terminal output of running hardhat tests on Twitt3r](/images/hardhat-tests.png)
+<Image src={hardhatTests} alt="Terminal output of running hardhat tests on Twitt3r" />
 
 With a passing suite of tests, we can protect from the most glaring contract issues. There's a lot more we could cover on the contract side, but it's time to move on. Feel free to poke around in the [GitHub repo](https://github.com/maxpetretta/twitt3r.xyz/tree/master/hardhat).
 
@@ -251,7 +255,7 @@ I'll skip over the core stack of [React](https://reactjs.org/), [Next.js](https:
 
 The first thing new users will need to do on Twitt3r is connect their wallet. Fortunately, [RainbowKit](https://www.rainbowkit.com/) makes this incredibly easy:
 
-![A screenshot of the RainbowKit UI](/images/rainbowkit.png)
+<Image src={rainbowkit} alt="A screenshot of the RainbowKit UI" />
 
 > Image courtesy of Rainbow.me
 
@@ -336,7 +340,7 @@ The last piece of the puzzle for a social media site is storing user profile inf
 
 The [Ethereum Name Service](https://ens.domains/) is the username, avatar, and profile of web3. It allows you to assign a human-readable name to any wallet address, and users can add any number of other fields to share with web3 applications. As an example, here is what my ENS profile looks like:
 
-![A screenshot of the author's ENS profile page](/images/ens-profile.png)
+<Image src={ensProfile} alt="A screenshot of the author's ENS profile page" />
 
 You can see that I've set a profile picture, added a short bio, and linked to a bunch of different social networks. We can make use of all of this information on Twitt3r, which is actually quite easy thanks to wagmi and ethers. Let's look at how to pull this data:
 

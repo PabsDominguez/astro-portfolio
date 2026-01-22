@@ -5,6 +5,9 @@ description: A eulogy for the old way of software engineering
 categories: ["ai"]
 ---
 
+import { Image } from 'astro:assets';
+import claudeStats from '../images/claude-stats.png';
+
 I would be lying if I said I write 50% of the code that I ship into production, these days.
 
 I would *still* be lying if I said I write 20% of that code.
@@ -34,6 +37,8 @@ When [GPT-4 was released](https://openai.com/index/gpt-4-research/) in early 202
 ## Shipping Is Believing
 
 What drew my attention back to Claude Code was [this post](https://steipete.me/post-s/2025/claude-code-is-my-computer) by [Peter Steinberger](https://x.com/steipete)[^2]. His descriptions of using Claude as a "natural language terminal" got me to take a second look. That, plus the release of [Sonnet 4](https://www.anthropic.com/news/claude-4) in May, finally unlocked the workflow for me. And the difference was huge:
+
+<Image src={claudeStats} alt="My Claude Code stats page" />
 
 Since June, `ccusage` shows my total usage at over **7.5 billion tokens** - at API cost just under $8000. I've been on the 20x Max plan the entire way, so the actual bill is thankfully much lower.
 

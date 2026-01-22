@@ -2,11 +2,13 @@
 title: Building This Blog
 date: 2022-02-11
 description: A deep dive into the (old) tech stack powering this site
-image: /images/stack.png
 categories: ["webdev"]
 ---
 
-<img src="/images/stack.png" alt="An image of the Next.js and TailwindCSS logos" width="400" height="400" loading="eager" class="mx-auto" />
+import { Image } from 'astro:assets';
+import stack from '../images/stack.png';
+
+<Image src={stack} alt="An image of the Next.js and TailwindCSS logos" loading="eager" fetchpriority="high" />
 
 > Note: This is for the previous version of my website, which can still be seen on [GitHub here](https://github.com/maxpetretta/maxpetretta.com/releases/tag/v1.0). For the most recent version, see [this post](/website).
 

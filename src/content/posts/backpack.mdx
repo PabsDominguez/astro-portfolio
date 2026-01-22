@@ -1,12 +1,22 @@
 ---
 title: Travel Backpacks
-date: '2022-09-27'
+date: 2022-09-27
 description: Does the perfect travel onebag actually exist?
-image: /images/backpack.png
 categories: ["gear"]
 ---
 
-<img src="/images/backpack.png" alt="A photo of a backpack on a busy city street, courtesy of OpenAI's DALL-E" width="300" height="300" loading="eager" class="mx-auto">
+import { Image } from 'astro:assets';
+import backpack from '../images/backpack.png';
+import flatLayTravel from '../images/flat-lay-travel.png';
+import flatLayEdc from '../images/flat-lay-edc.png';
+import aeronaut from '../images/aeronaut.png';
+import techonaut from '../images/techonaut.png';
+import synik from '../images/synik.png';
+import peakdesign from '../images/peakdesign.png';
+import dragonfly from '../images/dragonfly.png';
+import shadowguide from '../images/shadowguide.png';
+
+<Image src={backpack} alt="A photo of a backpack on a busy city street, courtesy of OpenAI's DALL-E" loading="eager" fetchpriority="high" />
 
 There is just something _satisfying_ about a quality backpack. The ultra-durable materials, effortless zippers, and everything organized into a dedicated pocket.
 
@@ -24,7 +34,7 @@ To test these bags, I've tried to pack for a colder, but not snowy climate. Anyt
 
 ### Travel Kit
 
-![A flay lay photo of my primary travel items](/images/flat-lay-travel.png)
+<Image src={flatLayTravel} alt="A flay lay photo of my primary travel items" />
 
 Above I have:
 
@@ -47,7 +57,7 @@ It's also way easier to decide what I can or can't bring. If it can't fit in a c
 
 ### EDC Kit
 
-![A flay lay photo of my primary every day carry items](/images/flat-lay-edc.png)
+<Image src={flatLayEdc} alt="A flay lay photo of my primary every day carry items" />
 
 For an around town carry, I leave behind the clothing/toiletries for:
 
@@ -70,7 +80,7 @@ The water bottle and cables live in a small sling on travel days, but swap into 
 
 _Note: For reference, I am 6 feet tall and ~180 pounds_
 
-![A comparison image between the Tom Bihn Aeronaut holding EDC and travel items](/images/aeronaut.png)
+<Image src={aeronaut} alt="A comparison image between the Tom Bihn Aeronaut holding EDC and travel items" />
 
 #### Pros
 
@@ -96,7 +106,7 @@ A newer version with the Edgeless straps from the Synik/Techonaut was just relea
 
 **Specs:** 30L capacity, 2.54 lbs empty, 23.6 lbs full, 19.7" x 12.6" x 8.0"
 
-![A comparison image between the Tom Bihn Techonaut holding EDC and travel items](/images/techonaut.png)
+<Image src={techonaut} alt="A comparison image between the Tom Bihn Techonaut holding EDC and travel items" />
 
 #### Pros
 
@@ -122,7 +132,7 @@ If you don't care about reusing your bag for EDC, this would be a great dedicate
 
 **Specs:** 30L capacity, 3.00 lbs empty, 20.8 lbs full, 20.0" x 13.4" x 8.0"
 
-![A comparison image between the Tom Bihn Synik holding EDC and travel items](/images/synik.png)
+<Image src={synik} alt="A comparison image between the Tom Bihn Synik holding EDC and travel items" />
 
 #### Pros
 
@@ -148,7 +158,7 @@ If you are heavier on tech than clothing, or really love having dedicated pocket
 
 **Specs:** 33L capacity, 3.17 lbs empty, 23.4 lbs full, 20.9" x 13.4" x 7.9"
 
-![A comparison image between the Peak Design Travel Backpack holding EDC and travel items](/images/peakdesign.png)
+<Image src={peakdesign} alt="A comparison image between the Peak Design Travel Backpack holding EDC and travel items" />
 
 #### Pros
 
@@ -176,7 +186,7 @@ If you need to carry more delicate items, or you have a lighter loadout than me 
 
 **Specs:** 30L capacity, 1.84 lbs empty, 23.2 lbs full, 19.5" x 11.0" x 7.0"
 
-![A comparison image between the ULA Dragonfly holding EDC and travel items](/images/dragonfly.png)
+<Image src={dragonfly} alt="A comparison image between the ULA Dragonfly holding EDC and travel items" />
 
 #### Pros
 
@@ -208,7 +218,7 @@ Last minute, I decided to include this as a dark horse...
 
 **Specs:** 23L capacity, 2.19 lbs empty, 23.4 lbs full, 19.3" x 12.6" x 9.0"
 
-![A comparison image between the Tom Bihn Shadow Guide holding EDC and travel items](/images/shadowguide.png)
+<Image src={shadowguide} alt="A comparison image between the Tom Bihn Shadow Guide holding EDC and travel items" />
 
 #### Pros
 

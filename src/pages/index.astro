@@ -5,7 +5,7 @@ import Experiences from "@/components/Experiences.astro"
 import BlogPost from "@/components/BlogPost.astro"
 import { formatDate, getSortedPosts } from "@/lib/utils"
 
-const recentPosts = (await getSortedPosts()).slice(0, 5)
+const recentPosts = (await getSortedPosts()).slice(0, 4)
 ---
 
 <Layout>

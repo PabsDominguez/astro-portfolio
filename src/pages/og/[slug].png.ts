@@ -84,19 +84,19 @@ export const GET: APIRoute = async ({ props }) => {
     let imageBase64: string | null = null
     if (imageUrl) {
       try {
-        if (imageUrl.startsWith("/")) {
-          const imagePath = join(process.cwd(), "public", imageUrl.replace(/^\//, ""))
-          const imageBuffer = await readFile(imagePath)
-          const ext = imageUrl.split(".").pop()?.toLowerCase() ?? "png"
-          const mimeType = ext === "jpg" || ext === "jpeg" ? "image/jpeg" : `image/${ext}`
-          imageBase64 = `data:${mimeType};base64,${imageBuffer.toString("base64")}`
-        } else {
+        if (imageUrl.startsWith("http")) {
           const response = await fetch(imageUrl)
           if (response.ok) {
             const contentType = response.headers.get("content-type") ?? "image/png"
             const buffer = Buffer.from(await response.arrayBuffer())
             imageBase64 = `data:${contentType};base64,${buffer.toString("base64")}`
           }
+        } else {
+          const imagePath = join(process.cwd(), "src/content/images", imageUrl)
+          const imageBuffer = await readFile(imagePath)
+          const ext = imageUrl.split(".").pop()?.toLowerCase() ?? "png"
+          const mimeType = ext === "jpg" || ext === "jpeg" ? "image/jpeg" : `image/${ext}`
+          imageBase64 = `data:${mimeType};base64,${imageBuffer.toString("base64")}`
         }
       } catch {
         // Fall back to text-only OG image (no post image)
