@@ -5,14 +5,14 @@ description: A eulogy for the old way of software engineering
 categories: ["ai"]
 ---
 
-import { Image } from 'astro:assets';
-import claudeStats from '../images/claude-stats.webp';
+import { Image } from "astro:assets";
+import claudeStats from "../images/claude-stats.webp";
 
 I would be lying if I said I write 50% of the code that I ship into production, these days.
 
-I would *still* be lying if I said I write 20% of that code.
+I would _still_ be lying if I said I write 20% of that code.
 
-No, I am handwriting less than 10% of what I deploy. This should end in disaster - a giant ball of spaghetti. But somehow, it's working. And how fast I can ship is only *increasing*.
+No, I am handwriting less than 10% of what I deploy. This should end in disaster - a giant ball of spaghetti. But somehow, it's working. And how fast I can ship is only _increasing_.
 
 This is downstream of software engineering entering a new era, one defined by [Claude Code](https://claude.ai/code) and [those](https://developers.openai.com/codex) [like](https://opencode.ai/) [it](https://ampcode.com/).
 
@@ -20,7 +20,7 @@ This is downstream of software engineering entering a new era, one defined by [C
 
 When 2025 was proclaimed the "[year of agents](https://x.com/gdb/status/1879327050819104778)", I didn't buy it. At the time, I was still writing the majority of my code by hand with [Cursor](https://cursor.com).
 
-Agent mode was *okay*, at best. Each line it produced had to be scrutinized. The LLM was most helpful as a quick documentation lookup, or as an intelligent "find-and-replace" for boilerplate.
+Agent mode was _okay_, at best. Each line it produced had to be scrutinized. The LLM was most helpful as a quick documentation lookup, or as an intelligent "find-and-replace" for boilerplate.
 
 The model of choice was Claude 3.5 Sonnet[^1]. It's hard to explain, but you could tell that the model had "taste", which I can't remember any previous models having. After using 3.5 for awhile, you'd start to daydream about where this whole LLM thing was going.
 
@@ -30,19 +30,19 @@ Turns out Anthropic was thinking the exact same thing; they decided to pair the 
 
 Honestly, I was not a fan of Sonnet 3.7. It had some strange regressions compared to 3.5 that made me avoid it. Like frequently stopping mid-task to request more permission, or overengineering otherwise simple React components. The "taste" was missing. Since the model was a dud, I assumed the CLI was too.
 
-Meanwhile, [vibecoding](https://x.com/karpathy/status/1886192184808149383) was gaining momentum. I kept writing my code by hand. After all, for the first five years of my career there *was no other way*. The best method I had found to learn programming (or anything, really) was to take something apart piece-by-piece, and understand every word of syntax needed to make that product work.
+Meanwhile, [vibecoding](https://x.com/karpathy/status/1886192184808149383) was gaining momentum. I kept writing my code by hand. After all, for the first five years of my career there _was no other way_. The best method I had found to learn programming (or anything, really) was to take something apart piece-by-piece, and understand every word of syntax needed to make that product work.
 
 When [GPT-4 was released](https://openai.com/index/gpt-4-research/) in early 2023, I tried to leverage it as much as I could. Reflecting now, that was a mistake. Copy-and-pasting files of React and TypeScript back and forth was insanely inefficient, and the output quality was just not there. I would have been better served by ignoring LLMs for another year, and instead maximizing my time in the `$EDITOR`.
 
 ## Shipping Is Believing
 
-What drew my attention back to Claude Code was [this post](https://steipete.me/post-s/2025/claude-code-is-my-computer) by [Peter Steinberger](https://x.com/steipete)[^2]. His descriptions of using Claude as a "natural language terminal" got me to take a second look. That, plus the release of [Sonnet 4](https://www.anthropic.com/news/claude-4) in May, finally unlocked the workflow for me. And the difference was huge:
+What drew my attention back to Claude Code was [this post](https://steipete.me/posts/2025/claude-code-is-my-computer) by [Peter Steinberger](https://x.com/steipete)[^2]. His descriptions of using Claude as a "natural language terminal" got me to take a second look. That, plus the release of [Sonnet 4](https://www.anthropic.com/news/claude-4) in May, finally unlocked the workflow for me. And the difference was huge:
 
 <Image src={claudeStats} alt="My Claude Code stats page" />
 
 Since June, `ccusage` shows my total usage at over **7.5 billion tokens** - at API cost just under $8000. I've been on the 20x Max plan the entire way, so the actual bill is thankfully much lower.
 
-My rate of commits has roughly doubled, and we can prototype, test, and ship new features for Bracky[^3] almost daily. The hardest part is no longer engineering, but actually deciding *what* to build.
+My rate of commits has roughly doubled, and we can prototype, test, and ship new features for Bracky[^3] almost daily. The hardest part is no longer engineering, but actually deciding _what_ to build.
 
 ## Mourning What Was
 
