@@ -95,20 +95,88 @@ cd [path]                   # Change directory
 
 ---
 
-## Phase 2: Version Control & Deployment Pipeline
-*Coming next...*
 
-**Goals:**
-- Push code to GitHub
-- Connect Vercel to GitHub
-- Deploy site automatically
-- Understand Git workflow
+## Phase 2: Version Control & Deployment Pipeline ✅
+
+### What we did:
+1. ✅ Created public GitHub repository: `astro-portfolio`
+2. ✅ Connected local project to GitHub using HTTPS
+3. ✅ Authenticated with Personal Access Token (PAT)
+4. ✅ Pushed code to GitHub for the first time
+5. ✅ Connected Vercel to GitHub repository
+6. ✅ Deployed site automatically to Vercel
+7. ✅ Tested auto-deployment workflow
+8. ✅ Site live at: [your-vercel-url]
+
+### Key Concepts Learned:
+
+#### Git vs GitHub
+- **Git:** Version control tool that runs locally on your computer
+- **GitHub:** Online platform that hosts Git repositories (cloud backup + collaboration)
+
+#### The Three States of Files in Git:
+1. **Working Directory:** Where you edit files
+2. **Staging Area:** Where you prepare changes (after `git add`)
+3. **Repository:** Committed snapshots (after `git commit`)
+
+#### Git Workflow Cycle:
+```bash
+git status                           # See what changed
+git add .                            # Stage all changes
+git commit -m "Descriptive message"  # Save snapshot locally
+git push                             # Upload to GitHub
+```
+
+#### The `-m` Flag:
+- Stands for "message"
+- Lets you write commit message inline
+- Without it, Git opens a text editor (Vim/Nano)
+
+#### GitHub Authentication:
+- GitHub stopped accepting passwords in 2021
+- Must use Personal Access Token (PAT) for HTTPS
+- Alternative: GitHub CLI (`gh`) for easier auth
+
+#### Vercel Auto-Deployment:
+```
+Local change → git push → GitHub updated → Vercel detects push → 
+Auto-builds → Auto-deploys → Live in ~30 seconds!
+```
+
+### Commands Learned:
+```bash
+git status              # Check current state
+git add .               # Stage all changes
+git add [file]          # Stage specific file
+git commit -m "msg"     # Commit with message
+git push                # Push to GitHub
+git remote add origin   # Connect to GitHub repo
+which git               # Find Git location
+git --version           # Check Git version
+```
+
+### Important Files:
+- `.git/` - Local Git repository (hidden folder)
+- `.gitignore` - Files Git should ignore
+- `README.md` - Project description (optional)
+
+### Live Site:
+- **Vercel URL:** [paste your vercel URL here]
+- **Future custom domain:** pabsdominguez.com
 
 ---
 
 ## Phase 3: Build Your First Real Page
-*To be documented...*
+*Starting tomorrow...*
 
+**Goals:**
+- Learn Astro component structure
+- Build a proper homepage
+- Add Tailwind CSS styling
+- Create reusable components
+- Understand routing
+
+---
 ---
 
 ## Phase 4: Domain & Content Management
