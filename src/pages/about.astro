@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<Layout title="About - Pablo Dominguez">
+  <Nav />
+  
+  <main class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div class="max-w-5xl mx-auto px-6 py-20">
+      
+      <h1 class="text-5xl font-bold text-slate-900 mb-8">
+        About Me
+      </h1>
+      
+      <div class="space-y-6">
+        <p class="text-xl text-slate-700 leading-relaxed">
+          I'm a Product Design Manager with expertise in UX/UI design, currently learning modern web development to build and maintain my own websites and apps.
+        </p>
+        
+        <p class="text-xl text-slate-700 leading-relaxed">
+          I believe in understanding the fundamentals deeply, which is why I'm building this portfolio from scratch using Astro, Tailwind CSS, and modern deployment workflows.
+        </p>
+        
+        <h2 class="text-3xl font-bold text-slate-900 mt-12 mb-4">
+          Skills
+        </h2>
+        
+        <ul class="text-lg text-slate-700 space-y-2 list-disc list-inside">
+          <li>Product Design & UX/UI</li>
+          <li>HTML & CSS</li>
+          <li>Learning: Astro, JavaScript, Modern Web Development</li>
+          <li>Tools: Cursor, GitHub, Vercel</li>
+        </ul>
+      </div>
+      
+    </div>
+  </main>
+</Layout>
