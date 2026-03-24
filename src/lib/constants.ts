@@ -1,7 +1,7 @@
 /** Site configuration */
 export const SITE = {
-  domain: "maxpetretta.com",
-  url: "https://maxpetretta.com",
+  domain: "pabsdominguez.com",
+  url: "https://pabsdominguez.com",
 } as const
 
 /** Theme colors for meta tags and OG images */

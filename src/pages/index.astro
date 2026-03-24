@@ -10,8 +10,8 @@ const recentPosts = (await getSortedPosts()).slice(0, 4)
 
 <Layout>
   <section class="mt-6 text-muted-foreground">
-    <h2>Software Engineer</h2>
-    <h3>Detroit, MI</h3>
+    <h2>Product Design Lead</h2>
+    <h3>Cheltenham, UK</h3>
   </section>
 
   <section class="mt-20 sm:mt-24">
@@ -25,14 +25,14 @@ const recentPosts = (await getSortedPosts()).slice(0, 4)
   </section>
 
   <section class="mt-20 sm:mt-24">
-    <h3 class="mb-5 font-medium">Blog</h3>
+    <h3 class="mb-5 font-medium">Writing</h3>
     <ul class="space-y-2 text-sm sm:text-base">
       {recentPosts.map((post) => (
         <BlogPost href={`/${post.id}`} title={post.data.title} description={post.data.description} date={formatDate(post.data.date, true)} />
       ))}
     </ul>
     <div class="mt-4 flex justify-end">
-      <a href="/blog" class="text-sm underline underline-offset-4 text-muted-foreground hover:text-brand">All posts →</a>
+      <a href="/writing" class="text-sm underline underline-offset-4 text-muted-foreground hover:text-brand">All posts →</a>
     </div>
   </section>
 

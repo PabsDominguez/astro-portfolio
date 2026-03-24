@@ -19,10 +19,10 @@ interface Props {
   publishedTime?: Date | string
 }
 
-const { title = "Max Petretta", description = "Software Engineer", image, type = "website", publishedTime } = Astro.props
+const { title = "Pabs Domínguez", description = "Product Design Lead", image, type = "website", publishedTime } = Astro.props
 const pathname = Astro.url.pathname
-const canonicalUrl = new URL(pathname, Astro.site ?? "https://maxpetretta.com")
-const ogImageUrl = image ?? new URL("/favicons/web-app-manifest-512x512.png", Astro.site ?? "https://maxpetretta.com").toString()
+const canonicalUrl = new URL(pathname, Astro.site ?? "https://pabsdominguez.com")
+const ogImageUrl = image ?? new URL("/favicons/web-app-manifest-512x512.png", Astro.site ?? "https://pabsdominguez.com").toString()
 const twitterCard = image ? "summary_large_image" : "summary"
 const publishedTimeValue = (() => {
   if (!publishedTime) return undefined
@@ -31,23 +31,23 @@ const publishedTimeValue = (() => {
   return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString()
 })()
 
-const siteUrl = Astro.site?.toString() ?? "https://maxpetretta.com"
+const siteUrl = Astro.site?.toString() ?? "https://pabsdominguez.com"
 
 const personSchema = {
   "@type": "Person",
-  name: "Max Petretta",
+  name: "Pabs Domínguez",
   url: siteUrl,
   sameAs: [
-    "https://github.com/maxpetretta",
-    "https://twitter.com/maxpetretta",
-    "https://linkedin.com/in/maxpetretta",
+    "https://github.com/Pabsdominguez",
+    "https://twitter.com/Pabsdominguez",
+    "https://linkedin.com/in/pablodt",
   ],
 }
 
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Max Petretta",
+  name: "Pabs Dominguez",
   url: siteUrl,
   author: personSchema,
 }
@@ -98,7 +98,7 @@ const jsonLd = type === "article" ? articleSchema : websiteSchema
 
     <!-- Metadata -->
     <title>{title}</title>
-    <meta name="author" content="Max Petretta" />
+    <meta name="author" content="Pabs Dominguez" />
     <meta name="description" content={description} />
     <meta name="robots" content="follow, index" />
     <link rel="canonical" href={canonicalUrl} />
@@ -121,8 +121,8 @@ const jsonLd = type === "article" ? articleSchema : websiteSchema
     )}
 
     <!-- Twitter -->
-    <meta name="twitter:site" content="@maxpetretta" />
-    <meta name="twitter:creator" content="@maxpetretta" />
+    <meta name="twitter:site" content="@Pabsdominguez" />
+    <meta name="twitter:creator" content="@Pabsdominguez" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:card" content={twitterCard} />
@@ -147,7 +147,5 @@ const jsonLd = type === "article" ? articleSchema : websiteSchema
 
     <SpeedInsights />
 
-    <!-- Cloudflare Web Analytics -->
-    <script is:inline defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ba0720256c1c42a395f684206b379edd"}'></script>
   </body>
 </html>
