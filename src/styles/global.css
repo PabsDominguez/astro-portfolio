@@ -59,7 +59,7 @@
   --border: oklch(0.923 0.003 48.717);
   --input: oklch(0.923 0.003 48.717);
   --ring: oklch(0.709 0.01 56.259);
-  --brand: oklch(0.75 0.183 55.934);
+  --brand: oklch(0.78 0.1 192);
 }
 
 /* CSS Variables - Dark Mode */
@@ -82,7 +82,7 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.553 0.013 58.071);
-  --brand: oklch(0.75 0.183 55.934);
+  --brand: oklch(0.82 0.1 192);
 }
 
 /* Code Blocks - Theme Switching */
@@ -115,7 +115,7 @@
 
   .dark ::selection {
     @apply text-white;
-    background: oklch(0.75 0.183 55.934 / 50%);
+    background: oklch(0.78 0.1 192 / 50%);
   }
 }
 

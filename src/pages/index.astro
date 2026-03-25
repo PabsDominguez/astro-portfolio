@@ -4,17 +4,23 @@ import Projects from "@/components/Projects.astro"
 import Experiences from "@/components/Experiences.astro"
 import BlogPost from "@/components/BlogPost.astro"
 import { formatDate, getSortedPosts } from "@/lib/utils"
+import { Image } from 'astro:assets'
+import mask from '../content/images/Pabs.png'
 
 const recentPosts = (await getSortedPosts()).slice(0, 4)
 ---
 
 <Layout>
   <section class="mt-6 text-muted-foreground">
-    <h2>Product Design Lead</h2>
-    <h3>Cheltenham, UK</h3>
+    <Image src={mask} alt="Pabs Dominguez" width={96} height={96} class="w-24 h-24" />
   </section>
 
-  <section class="mt-20 sm:mt-24">
+  <section class="mt-6 text-muted-foreground">
+    <h1>I'm a Product Design leader living in the UK,<br> working the future of on-demand delivery at <a href="https://justeattakeaway.com/" class="underline underline-offset-4">Just Eat</a>.</h1>
+    <!-- <h3>Cheltenham, UK</h3> -->
+  </section>
+
+  <!-- <section class="mt-20 sm:mt-24">
     <h3 class="mb-4 font-medium">Now</h3>
     <p class="text-stone-700 dark:text-stone-300">
       Currently working on making prediction markets social with <a
@@ -22,7 +28,7 @@ const recentPosts = (await getSortedPosts()).slice(0, 4)
         class="underline underline-offset-4">Bracky</a
       >.
     </p>
-  </section>
+  </section> -->
 
   <section class="mt-20 sm:mt-24">
     <h3 class="mb-5 font-medium">Writing</h3>
