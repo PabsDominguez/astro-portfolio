@@ -130,6 +130,8 @@
   font-family: "VT323", monospace !important;
 }
 
+.crt h1 { font-size: 1.8rem !important; }
+
 .crt .prose { font-size: 1.6rem !important; line-height: 1.5 !important; }
 .crt .prose h2 { font-size: 1.25em !important; }
 
