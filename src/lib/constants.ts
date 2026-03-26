@@ -9,4 +9,5 @@ export const THEME_COLORS = {
   dark: "#181716",
   light: "#ffffff",
   foreground: "#fafaf9",
+  crt: "#000000",
 } as const

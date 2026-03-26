@@ -1,15 +1,16 @@
 import { THEME_COLORS } from "@/lib/constants"
 
-/** Apply theme class and update meta theme-color */
+/** Apply theme classes and update meta theme-color */
 function applyTheme() {
-  const isDark = localStorage.theme !== "light"
-  document.documentElement.classList.toggle("dark", isDark)
-  updateThemeColor(isDark)
+  const theme = localStorage.theme ?? "dark"
+  document.documentElement.classList.toggle("dark", theme === "dark")
+  document.documentElement.classList.toggle("crt", theme === "crt")
+  updateThemeColor(theme)
 }
 
 /** Update the theme-color meta tag */
-function updateThemeColor(isDark: boolean) {
-  const themeColor = isDark ? THEME_COLORS.dark : THEME_COLORS.light
+function updateThemeColor(theme: string) {
+  const themeColor = theme === "crt" ? THEME_COLORS.crt : theme === "dark" ? THEME_COLORS.dark : THEME_COLORS.light
   let meta = document.querySelector('meta[name="theme-color"]')
   if (!meta) {
     meta = document.createElement("meta")
@@ -19,11 +20,17 @@ function updateThemeColor(isDark: boolean) {
   meta.setAttribute("content", themeColor)
 }
 
-/** Sync toggle aria state with current theme */
+/** Sync toggle aria label with current theme */
 function syncToggleState() {
-  const isDark = document.documentElement.classList.contains("dark")
+  const theme = localStorage.theme ?? "dark"
   const toggle = document.getElementById("theme-toggle")
-  if (toggle) toggle.setAttribute("aria-checked", (!isDark).toString())
+  if (!toggle) return
+  const labels: Record<string, string> = {
+    dark: "Switch to CRT mode",
+    crt: "Switch to light mode",
+    light: "Switch to dark mode",
+  }
+  toggle.setAttribute("aria-label", labels[theme] ?? "Toggle theme")
 }
 
 /** Initialize all theme functionality */
@@ -41,12 +48,10 @@ function initThemeToggle() {
   toggle.dataset.themeToggleBound = "true"
 
   toggle.addEventListener("click", () => {
-    const isDark = document.documentElement.classList.contains("dark")
-    const nextIsDark = !isDark
-
-    document.documentElement.classList.toggle("dark", nextIsDark)
-    localStorage.theme = nextIsDark ? "dark" : "light"
-    toggle.setAttribute("aria-checked", (!nextIsDark).toString())
-    updateThemeColor(nextIsDark)
+    const current = localStorage.theme ?? "dark"
+    const next = current === "dark" ? "crt" : current === "crt" ? "light" : "dark"
+    localStorage.theme = next
+    applyTheme()
+    syncToggleState()
   })
 }

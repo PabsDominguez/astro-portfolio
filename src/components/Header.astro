@@ -1,6 +1,7 @@
 ---
 import Sun from "@lucide/astro/icons/sun"
 import Moon from "@lucide/astro/icons/moon"
+import Computer from "@lucide/astro/icons/computer"
 
 interface Props {
   pathname: string
@@ -11,8 +12,6 @@ const isHome = pathname === "/"
 ---
 
 <header class="mt-6 md:mt-16">
-
-  
   <nav class="flex items-center justify-between">
     <a
       href="/"
@@ -29,8 +28,9 @@ const isHome = pathname === "/"
         class="cursor-pointer text-muted-foreground hover:text-foreground transition-colors p-2 -mr-2 rounded-md"
         aria-label="Toggle theme"
       >
-        <Sun class="size-5 hidden dark:block" />
-        <Moon class="size-5 block dark:hidden" />
+        <Sun class="size-5 hidden dark:hidden crt:block" />
+        <Moon class="size-5 block dark:hidden crt:hidden" />
+        <Computer class="size-5 hidden dark:block crt:hidden" />
       </button>
     </div>
   </nav>
@@ -42,7 +42,9 @@ const isHome = pathname === "/"
   // Preserve theme during View Transitions (before swap to prevent flash)
   document.addEventListener("astro:before-swap", (e) => {
     const isDark = document.documentElement.classList.contains("dark")
+    const isCrt = document.documentElement.classList.contains("crt")
     e.newDocument.documentElement.classList.toggle("dark", isDark)
+    e.newDocument.documentElement.classList.toggle("crt", isCrt)
   })
 
   initTheme()

@@ -21,6 +21,7 @@
     "@astrojs/vercel": "^8.0.4",
     "@fontsource-variable/inter": "5.2.8",
     "@fontsource/monaspace-argon": "5.2.5",
+    "@fontsource/vt323": "^5.2.7",
     "@lucide/astro": "0.562.0",
     "@tailwindcss/typography": "0.5.19",
     "@vercel/og": "0.8.6",

@@ -2,6 +2,7 @@
 import "@fontsource-variable/inter/standard.css"
 import "@fontsource-variable/inter/standard-italic.css"
 import "@fontsource/monaspace-argon/latin-400.css"
+import "@fontsource/vt323"
 import interLatinWghtNormal from "@fontsource-variable/inter/files/inter-latin-standard-normal.woff2?url"
 import monaspaceArgon from "@fontsource/monaspace-argon/files/monaspace-argon-latin-400-normal.woff2?url"
 import { ClientRouter } from "astro:transitions"
@@ -78,11 +79,14 @@ const jsonLd = type === "article" ? articleSchema : websiteSchema
     <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={monaspaceArgon} />
 
     <!-- Color theme (inline to prevent FOUC, see src/lib/theme.ts for module version) -->
-    <script is:inline define:vars={{ darkColor: THEME_COLORS.dark, lightColor: THEME_COLORS.light }}>
+    <script is:inline define:vars={{ darkColor: THEME_COLORS.dark, lightColor: THEME_COLORS.light, crtColor: THEME_COLORS.crt }}>
       ;(function() {
-        var d = localStorage.theme !== "light"
-        document.documentElement.classList.toggle("dark", d)
-        var c = d ? darkColor : lightColor
+        var t = localStorage.theme
+        var isDark = !t || t === "dark"
+        var isCrt = t === "crt"
+        document.documentElement.classList.toggle("dark", isDark)
+        document.documentElement.classList.toggle("crt", isCrt)
+        var c = isCrt ? crtColor : isDark ? darkColor : lightColor
         var m = document.querySelector('meta[name="theme-color"]')
         if (!m) { m = document.createElement("meta"); m.name = "theme-color"; document.head.appendChild(m) }
         m.content = c
