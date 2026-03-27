@@ -133,12 +133,36 @@
 .crt h1 { font-size: 1.8rem !important; }
 
 .crt .prose { font-size: 1.6rem !important; line-height: 1.5 !important; }
+.crt .prose code, .crt .prose pre { font-size: 0.75em !important; background-color: oklch(0.15 0.08 145) !important; }
 .crt .prose h2 { font-size: 1.25em !important; }
-.crt .prose p { line-height: 1.2 !important; }
+.crt .prose p { line-height: 1.3 !important; }
 
 .crt .text-xs { font-size: 1.2rem !important; }
 .crt .text-sm { font-size: 1.6rem !important; }
 .crt .text-base { font-size: 1.8rem !important; }
+
+/* CRT image treatment: green duotone + pixel grid overlay */
+.crt img {
+  filter: grayscale(100%) contrast(2) brightness(0.8) sepia(100%) hue-rotate(85deg) saturate(400%);
+  image-rendering: pixelated;
+}
+
+.crt .prose figure {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt .prose figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.5) 1px, transparent 1px);
+  background-size: 6px 6px;
+  pointer-events: none;
+  z-index: 1;
+}
 
 .crt body::after {
   content: "";
