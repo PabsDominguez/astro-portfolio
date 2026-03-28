@@ -30,7 +30,10 @@ const isHome = pathname === "/"
       >
         <Sun class="size-5 hidden dark:hidden crt:block" />
         <Moon class="size-5 block dark:hidden crt:hidden" />
-        <Computer class="size-5 hidden dark:block crt:hidden" />
+        <span class="hidden dark:flex crt:hidden flex-col items-center gap-0.5">
+          <Computer class="size-5" />
+          <span class="text-[0.55rem] leading-none tracking-wide uppercase">CRT</span>
+        </span>
       </button>
     </div>
   </nav>
