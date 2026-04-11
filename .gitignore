@@ -17,3 +17,9 @@ dist/
 
 # Misc
 .DS_Store
+
+# Obsidian
+.obsidian
+
+# Drafts folder for Obsidian
+src/content/posts/drafts/

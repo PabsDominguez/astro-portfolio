@@ -204,6 +204,7 @@
 
   html {
     font-size: 112.5%; /* 18px base: 112.5% of browser default 16px */
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -214,7 +215,11 @@
     font-size: inherit;
   }
 
-  a.underline:hover {
+  a, button {
+    transition: color 150ms ease, background-color 150ms ease, opacity 150ms ease;
+  }
+
+  a:hover, button:hover {
     color: var(--brand);
     text-decoration-color: var(--brand);
   }
@@ -296,3 +301,4 @@ a[data-footnote-backref] {
 a[data-footnote-backref]:hover {
   color: var(--brand);
 }
+
