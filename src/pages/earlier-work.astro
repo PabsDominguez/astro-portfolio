@@ -1,0 +1,243 @@
+---
+import Layout from "@/layouts/Layout.astro"
+
+const projects = [
+  {
+    title: "Money Clothing",
+    description: "Redesign for the Money clothing store website. Done while at Nerv agency.",
+    cover: "money.jpg",
+    images: ["money-1.jpg", "money-3.jpg"],
+  },
+  {
+    title: "SG Point of Service Sales",
+    description: "Website for a point of sale devices seller from Singapore.",
+    cover: "sg.jpg",
+    images: ["sg-1.jpg", "sg-15.jpg", "sg-2.jpg", "sg-3.jpg"],
+  },
+  {
+    title: "Harper's Bazaar Online Slides",
+    description: "Information architecture, interaction and visual design for an internal presentation tool. Done while at Nerv agency.",
+    cover: "harper.jpg",
+    images: ["harper-1.jpg", "harper-2.jpg", "harper-3.jpg", "harper-4.jpg", "harper-5.jpg"],
+  },
+  {
+    title: "Bottlegreen",
+    description: "Redesign for a tonic water company with unusual flavours. Done while at Nerv agency.",
+    cover: "green.jpg",
+    images: ["green-1.jpg", "green-2.jpg"],
+  },
+  {
+    title: "Names.co.uk",
+    description: "Design for a leading domain registration and services company. Done while at Nerv agency.",
+    cover: "names.jpg",
+    images: ["names-1.jpg", "names-2.jpg", "names-3.jpg"],
+  },
+  {
+    title: "Bauapp",
+    description: "Information architecture, interaction and visual design for an app that serves audioguides for museums and galleries.",
+    cover: "bau.jpg",
+    images: ["bau-1.jpg", "bau-2.jpg", "bau-3.jpg"],
+  },
+  {
+    title: "Fourlaw Lawyers",
+    description: "Web design and coding for a boutique law firm from Madrid.",
+    cover: "fl.jpg",
+    images: ["fl-1.jpg", "fl-2.jpg", "fl-3.jpg"],
+  },
+  {
+    title: "NFL Players",
+    description: "Official website for Colin Kaepernick, Patrick Willis and Casey Howard.",
+    cover: "nfl.jpg",
+    images: ["kaep-1.jpg", "kaep-2.jpg", "casey-1.jpg", "willis-1.jpg"],
+  },
+  {
+    title: "Colourpuff",
+    description: "Information architecture, interaction and visual design for a new concept of ecommerce referral — finding items for your home by browsing colour.",
+    cover: "colour.jpg",
+    images: ["colour-1.jpg", "colour-2.jpg", "colour-3.jpg", "colour-4.jpg", "colour-5.jpg"],
+  },
+  {
+    title: "11870.com",
+    description: "Worked for a year as Designer / UX consultant for this restaurant and popular places reviews service. New features and a new style for the website and iOS app.",
+    cover: "118.jpg",
+    images: ["118-1.jpg", "118-2.jpg", "118-3.jpg", "118-4.jpg"],
+  },
+  {
+    title: "hussa.me",
+    description: "Responsive design and coding for the personal blog of Sheikha Hussa bint Khalid Al Khalifa of Bahrain.",
+    cover: "hussa.jpg",
+    images: ["hussa-1.jpg", "hussa-2.jpg", "hussa-3.jpg", "hussa-4.jpg"],
+  },
+  {
+    title: "Lynx Golf",
+    description: "Information architecture and visual design for the official product range of British golf brand Lynx.",
+    cover: "lynx.jpg",
+    images: ["lynx-1.jpg", "lynx-2.jpg", "lynx-3.jpg"],
+  },
+  {
+    title: "The 2000s",
+    description: "A selection of work from 2000 to 2011 — projects spanning information architecture, interaction and visual design, frontend development, and CMS integration.",
+    cover: "early.jpg",
+    images: ["pm-1.jpg", "pm-2.jpg", "slide-1.jpg", "slide-2.jpg", "wedding-1.jpg", "wedding-2.jpg", "pizarra-1.jpg", "pizarra-2.jpg", "host-1.jpg", "cote-1.jpg", "clases-1.jpg", "clases-3.jpg", "ralf-1.jpg", "ralf-2.jpg", "folio-1.jpg"],
+  },
+]
+---
+
+<Layout title="Earlier Work | Pabs Dominguez" description="A visual archive of projects from earlier in my career.">
+  <section class="mt-6 mb-4">
+    <h1 class="text-2xl font-semibold">Earlier Work</h1>
+    <p class="mt-3 text-muted-foreground">
+      A visual archive of projects I enjoyed working on during my career, going back to my first design work.
+    </p>
+  </section>
+
+  <ul class="mt-12 space-y-16">
+    {projects.map((project) => (
+      <li class="fade-in-entry opacity-0 translate-y-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-6">
+        <!-- Text — full width on mobile, 30% on desktop -->
+        <div class="sm:w-[30%] sm:shrink-0 sm:pt-1">
+          <h2 class="font-medium">{project.title}</h2>
+          <p class="mt-2 text-sm text-muted-foreground">{project.description}</p>
+        </div>
+
+        <!-- Cover image — 70%, clicking opens the lightbox -->
+        <button
+          class="gallery-trigger w-full sm:w-[70%] sm:shrink-0 cursor-zoom-in"
+          data-images={JSON.stringify(project.images.map(img => `/gallery/${img}`))}
+          aria-label={`View screenshots for ${project.title}`}
+        >
+          <img
+            src={`/gallery/${project.cover}`}
+            alt={project.title}
+            class="w-full rounded-sm object-cover transition-opacity hover:opacity-75"
+            loading="lazy"
+          />
+        </button>
+      </li>
+    ))}
+  </ul>
+</Layout>
+
+<!-- Lightbox — full-screen overlay -->
+<dialog id="lightbox" class="fixed inset-0 m-0 h-full w-full max-h-none max-w-none overflow-hidden border-0 bg-transparent p-0 backdrop:bg-black/90">
+  <!-- Close button -->
+  <button
+    id="lightbox-close"
+    class="absolute right-4 top-4 z-10 rounded-full p-2 text-white/70 transition-colors hover:text-white"
+    aria-label="Close"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+
+  <!-- Counter -->
+  <span id="lightbox-counter" class="absolute top-5 left-1/2 -translate-x-1/2 text-xs text-white/50 tabular-nums"></span>
+
+  <!-- Main area: prev zone + image + next zone -->
+  <div class="flex h-full w-full items-center justify-center">
+    <!-- Prev click zone -->
+    <button
+      id="lightbox-prev"
+      class="absolute left-0 top-0 h-full w-1/4 cursor-w-resize opacity-0"
+      aria-label="Previous image"
+    ></button>
+
+    <!-- Image — clicking advances to next -->
+    <img
+      id="lightbox-img"
+      src=""
+      alt=""
+      class="max-h-[88vh] max-w-[88vw] rounded-sm object-contain shadow-2xl select-none cursor-pointer"
+    />
+
+    <!-- Next click zone -->
+    <button
+      id="lightbox-next"
+      class="absolute right-0 top-0 h-full w-1/4 cursor-e-resize opacity-0"
+      aria-label="Next image"
+    ></button>
+  </div>
+</dialog>
+
+<style>
+  .fade-in-entry {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in-entry.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  // — Scroll fade-in —
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible")
+          observer.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.1 }
+  )
+
+  document.querySelectorAll(".fade-in-entry").forEach((el) => observer.observe(el))
+
+  // — Lightbox —
+  const dialog = document.getElementById("lightbox") as HTMLDialogElement
+  const img = document.getElementById("lightbox-img") as HTMLImageElement
+  const prev = document.getElementById("lightbox-prev") as HTMLButtonElement
+  const next = document.getElementById("lightbox-next") as HTMLButtonElement
+  const close = document.getElementById("lightbox-close") as HTMLButtonElement
+  const counter = document.getElementById("lightbox-counter") as HTMLSpanElement
+
+  let images: string[] = []
+  let current = 0
+
+  function show(index: number) {
+    current = (index + images.length) % images.length
+    img.src = images[current] ?? ""
+    const hasMultiple = images.length > 1
+    counter.textContent = hasMultiple ? `${current + 1} / ${images.length}` : ""
+    prev.style.visibility = hasMultiple ? "visible" : "hidden"
+    next.style.visibility = hasMultiple ? "visible" : "hidden"
+  }
+
+  function openLightbox(imageList: string[]) {
+    images = imageList
+    show(0)
+    dialog.showModal()
+    document.body.style.overflow = "hidden"
+  }
+
+  function closeLightbox() {
+    dialog.close()
+    document.body.style.overflow = ""
+  }
+
+  document.querySelectorAll<HTMLButtonElement>(".gallery-trigger").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const imageList = JSON.parse(btn.dataset.images || "[]")
+      openLightbox(imageList)
+    })
+  })
+
+  prev.addEventListener("click", () => show(current - 1))
+  next.addEventListener("click", () => show(current + 1))
+  img.addEventListener("click", () => show(current + 1))
+  close.addEventListener("click", closeLightbox)
+
+  // Close on backdrop click (clicking the dialog element itself, not its children)
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) closeLightbox()
+  })
+
+  // Keyboard
+  dialog.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") show(current - 1)
+    if (e.key === "ArrowRight") show(current + 1)
+  })
+</script>

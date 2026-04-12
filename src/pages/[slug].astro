@@ -5,15 +5,17 @@ import { formatDate } from "@/lib/utils"
 import type { GetStaticPaths } from "astro"
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await getCollection("posts")
-  return posts.map((post) => ({
+  const posts = (await getCollection("posts")).sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  )
+  return posts.map((post, i) => ({
     params: { slug: post.id },
-    props: { post },
+    props: { post, nextPost: posts[i + 1] ?? null },
   }))
 }
 
-type Props = { post: CollectionEntry<"posts"> }
-const { post } = Astro.props as Props
+type Props = { post: CollectionEntry<"posts">; nextPost: CollectionEntry<"posts"> | null }
+const { post, nextPost } = Astro.props as Props
 const { Content } = await render(post)
 const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta.com").toString()
 ---
@@ -59,6 +61,17 @@ const ogImage = new URL(`/og/${post.id}.png`, Astro.site ?? "https://maxpetretta
 
     <Content />
   </article>
+
+  <nav class="mt-12 flex items-center justify-between border-t border-border pt-6 text-sm">
+    <a href="/writing" class="flex items-center gap-1.5 text-muted-foreground underline underline-offset-4 hover:text-brand">
+      ← All posts
+    </a>
+    {nextPost && (
+      <a href={`/${nextPost.id}`} class="flex items-center gap-1.5 text-muted-foreground underline underline-offset-4 hover:text-brand text-right">
+        <span>Read next: {nextPost.data.title} →</span>
+      </a>
+    )}
+  </nav>
 </Layout>
 
 <script>
