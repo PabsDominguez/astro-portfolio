@@ -120,43 +120,32 @@ const projects = [
 
 <!-- Lightbox — full-screen overlay -->
 <dialog id="lightbox" class="fixed inset-0 m-0 h-full w-full max-h-none max-w-none overflow-hidden border-0 bg-transparent p-0 backdrop:bg-black/90">
-  <!-- Close button -->
-  <button
-    id="lightbox-close"
-    class="absolute right-4 top-4 z-10 rounded-full p-2 text-white/70 transition-colors hover:text-white"
-    aria-label="Close"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </button>
+  <!-- Backdrop — clicking here closes -->
+  <div id="lightbox-backdrop" class="flex h-full w-full items-center justify-center cursor-zoom-out">
+    <!-- Image wrapper — clicks here don't bubble up to backdrop -->
+    <div class="relative" id="lightbox-wrapper">
+      <!-- X button — top-right corner of the image -->
+      <button
+        id="lightbox-close"
+        class="absolute -top-3 -right-3 z-10 rounded-full bg-black/60 p-1 text-white/70 transition-colors hover:text-white"
+        aria-label="Close"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
 
-  <!-- Counter -->
-  <span id="lightbox-counter" class="absolute top-5 left-1/2 -translate-x-1/2 text-xs text-white/50 tabular-nums"></span>
+      <!-- Image — clicking advances to next -->
+      <img
+        id="lightbox-img"
+        src=""
+        alt=""
+        class="max-h-[88vh] max-w-[88vw] rounded-sm object-contain shadow-2xl select-none cursor-pointer"
+      />
 
-  <!-- Main area: prev zone + image + next zone -->
-  <div class="flex h-full w-full items-center justify-center">
-    <!-- Prev click zone -->
-    <button
-      id="lightbox-prev"
-      class="absolute left-0 top-0 h-full w-1/4 cursor-w-resize opacity-0"
-      aria-label="Previous image"
-    ></button>
-
-    <!-- Image — clicking advances to next -->
-    <img
-      id="lightbox-img"
-      src=""
-      alt=""
-      class="max-h-[88vh] max-w-[88vw] rounded-sm object-contain shadow-2xl select-none cursor-pointer"
-    />
-
-    <!-- Next click zone -->
-    <button
-      id="lightbox-next"
-      class="absolute right-0 top-0 h-full w-1/4 cursor-e-resize opacity-0"
-      aria-label="Next image"
-    ></button>
+      <!-- Counter -->
+      <span id="lightbox-counter" class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-white/50 tabular-nums whitespace-nowrap"></span>
+    </div>
   </div>
 </dialog>
 
@@ -188,9 +177,8 @@ const projects = [
 
   // — Lightbox —
   const dialog = document.getElementById("lightbox") as HTMLDialogElement
+  const backdrop = document.getElementById("lightbox-backdrop") as HTMLDivElement
   const img = document.getElementById("lightbox-img") as HTMLImageElement
-  const prev = document.getElementById("lightbox-prev") as HTMLButtonElement
-  const next = document.getElementById("lightbox-next") as HTMLButtonElement
   const close = document.getElementById("lightbox-close") as HTMLButtonElement
   const counter = document.getElementById("lightbox-counter") as HTMLSpanElement
 
@@ -200,10 +188,7 @@ const projects = [
   function show(index: number) {
     current = (index + images.length) % images.length
     img.src = images[current] ?? ""
-    const hasMultiple = images.length > 1
-    counter.textContent = hasMultiple ? `${current + 1} / ${images.length}` : ""
-    prev.style.visibility = hasMultiple ? "visible" : "hidden"
-    next.style.visibility = hasMultiple ? "visible" : "hidden"
+    counter.textContent = images.length > 1 ? `${current + 1} / ${images.length}` : ""
   }
 
   function openLightbox(imageList: string[]) {
@@ -225,19 +210,30 @@ const projects = [
     })
   })
 
-  prev.addEventListener("click", () => show(current - 1))
-  next.addEventListener("click", () => show(current + 1))
   img.addEventListener("click", () => show(current + 1))
   close.addEventListener("click", closeLightbox)
 
-  // Close on backdrop click (clicking the dialog element itself, not its children)
-  dialog.addEventListener("click", (e) => {
-    if (e.target === dialog) closeLightbox()
-  })
+  // Close when clicking the backdrop (outside the image)
+  backdrop.addEventListener("click", closeLightbox)
+  // Prevent clicks on the image/close button from bubbling up to the backdrop
+  img.addEventListener("click", (e) => e.stopPropagation())
+  close.addEventListener("click", (e) => e.stopPropagation())
 
   // Keyboard
   dialog.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") show(current - 1)
     if (e.key === "ArrowRight") show(current + 1)
   })
+
+  // Swipe
+  let touchStartX = 0
+  img.addEventListener("touchstart", (e) => {
+    touchStartX = e.touches[0]?.clientX ?? 0
+  }, { passive: true })
+  img.addEventListener("touchend", (e) => {
+    const delta = (e.changedTouches[0]?.clientX ?? 0) - touchStartX
+    if (Math.abs(delta) > 40) {
+      delta < 0 ? show(current + 1) : show(current - 1)
+    }
+  }, { passive: true })
 </script>
