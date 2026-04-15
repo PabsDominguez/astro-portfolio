@@ -302,3 +302,19 @@ a[data-footnote-backref]:hover {
   color: var(--brand);
 }
 
+/* Earlier Work gallery */
+.fade-in-entry {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in-entry.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cover-img {
+  transition: transform 0.3s ease;
+}
+.cover-img:hover {
+  transform: translateY(-6px) rotate(1deg);
+}
+
