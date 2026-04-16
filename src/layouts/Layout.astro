@@ -9,6 +9,7 @@ import { ClientRouter } from "astro:transitions"
 import SpeedInsights from "@vercel/speed-insights/astro"
 import Header from "@/components/Header.astro"
 import Footer from "@/components/Footer.astro"
+import DotMatrix from "@/components/DotMatrix.astro"
 import { THEME_COLORS } from "@/lib/constants"
 import "@/styles/global.css"
 
@@ -18,9 +19,10 @@ interface Props {
   image?: string
   type?: "website" | "article"
   publishedTime?: Date | string
+  topFill?: boolean
 }
 
-const { title = "Pabs Domínguez", description = "Product Design Lead", image, type = "website", publishedTime } = Astro.props
+const { title = "Pabs Domínguez", description = "Product Design Lead", image, type = "website", publishedTime, topFill = false } = Astro.props
 const pathname = Astro.url.pathname
 const canonicalUrl = new URL(pathname, Astro.site ?? "https://pabsdominguez.com")
 const ogImageUrl = image ?? new URL("/favicons/web-app-manifest-512x512.png", Astro.site ?? "https://pabsdominguez.com").toString()
@@ -139,7 +141,8 @@ const jsonLd = type === "article" ? articleSchema : websiteSchema
     <slot name="head" />
   </head>
   <body>
-    <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-5 md:px-0">
+    <DotMatrix topFill={topFill} />
+    <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-5 md:px-0 relative z-10">
       <Header pathname={pathname} />
 
       <main class="grow">

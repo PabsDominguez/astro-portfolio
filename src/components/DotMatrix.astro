@@ -1,0 +1,172 @@
+---
+/**
+ * DotMatrix — full-screen animated dot grid background.
+ *
+ * Props:
+ *   topFill (boolean, default false) — when true, dots fill the full width
+ *   at the top of the viewport (good for hero sections) then transition to
+ *   side-only strips below. When false, side-only strips for the full height.
+ *
+ * Usage:
+ *   <DotMatrix />              — sides only
+ *   <DotMatrix topFill={true} /> — full top + sides below
+ */
+
+interface Props {
+  topFill?: boolean
+}
+const { topFill = false } = Astro.props
+---
+
+<canvas id="dot-matrix" aria-hidden="true" data-top-fill={topFill.toString()}></canvas>
+
+<style>
+  #dot-matrix {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+</style>
+
+<script>
+  const SPACING = 22
+  const DOT_RADIUS = 1.2
+  const SPEED = 0.0012
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+  // Smooth 0→1 transition between edge and centre
+  function smoothstep(edge0: number, edge1: number, x: number) {
+    const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)))
+    return t * t * (3 - 2 * t)
+  }
+
+  // Re-queried on every init() so view transitions get the current page's canvas
+  let canvas: HTMLCanvasElement
+  let ctx: CanvasRenderingContext2D
+  let topFill: boolean
+
+  function resize() {
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+  }
+
+  function getTheme() {
+    const html = document.documentElement
+    if (html.classList.contains("crt")) return "crt"
+    if (html.classList.contains("dark")) return "dark"
+    return "light"
+  }
+
+  function draw(time: number) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    const cols = Math.ceil(canvas.width / SPACING) + 1
+    const rows = Math.ceil(canvas.height / SPACING) + 1
+
+    const theme = getTheme()
+    const [r, g, b] = theme === "crt" ? [80, 220, 100] : theme === "dark" ? [255, 255, 255] : [0, 0, 0]
+
+    const halfW = canvas.width / 2
+
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const x = col * SPACING
+        const y = row * SPACING
+
+        /*
+         * Horizontal mask: 0 in the content column, 1 at the edges.
+         * normX = 0 at centre, 1 at edge.
+         * Dots start appearing at 40% out from the centre (60% from edge).
+         */
+        const normX = Math.abs(x - halfW) / halfW
+        const hMask = smoothstep(0.30, 0.42, normX)
+
+        /*
+         * Vertical mask (topFill only): fully visible at the top of the
+         * viewport, fading to 0 by 28% down. Combined with hMask via max()
+         * so the top area shows dots everywhere, not just on the sides.
+         */
+        const normY = y / canvas.height
+        const vMask = topFill ? 1 - smoothstep(0, 0.28, normY) : 0
+
+        // Union: show dot if either the side strip OR the top fill says so
+        const mask = Math.max(hMask, vMask)
+        if (mask <= 0) continue
+
+        /*
+         * Per-dot random phase offset seeded by grid position.
+         * sin(large primes * col/row) produces a stable pseudo-random value
+         * unique to each dot. This breaks the perfect wave symmetry so the
+         * pattern looks organic rather than forming repeating circles.
+         */
+        const hash = Math.sin(col * 127.1 + row * 311.7) * 43758.5453
+        const rnd = (hash - Math.floor(hash)) * Math.PI * 0.8
+
+        /*
+         * Three sine waves at different angles and speeds, each shifted by
+         * the dot's random offset to break circular interference patterns.
+         */
+        const wave1 = Math.sin(x * 0.007 + y * 0.010 - time * SPEED + rnd)
+        const wave2 = Math.sin(x * 0.011 - y * 0.006 + time * SPEED * 0.8 + rnd * 0.7)
+        const wave3 = Math.sin(x * 0.004 + y * 0.013 - time * SPEED * 0.5 + rnd * 1.3)
+        // t ranges 0→1. Squaring it makes the "off" state last longer.
+        const t = Math.pow((wave1 + wave2 + wave3 + 3) / 6, 2)
+        const baseOpacity = theme === "light" ? t * 0.55 : theme === "dark" ? t * 0.35 : t * 0.65
+
+        const opacity = baseOpacity * mask
+        // Centre dot
+        ctx.beginPath()
+        ctx.arc(x, y, DOT_RADIUS, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(${r},${g},${b},${opacity})`
+        ctx.fill()
+
+        // Star arms: only grow in when dot is near peak (t > 0.75)
+        // Arms are diagonal (×) so they stand out against the grid axes
+        if (t > 0.75) {
+          const armLength = DOT_RADIUS * 4 * ((t - 0.75) / 0.25)
+          ctx.strokeStyle = `rgba(${r},${g},${b},${opacity * 0.5})`
+          ctx.lineWidth = 0.6
+          ctx.beginPath()
+          ctx.moveTo(x - armLength, y - armLength)
+          ctx.lineTo(x + armLength, y + armLength)
+          ctx.moveTo(x + armLength, y - armLength)
+          ctx.lineTo(x - armLength, y + armLength)
+          ctx.stroke()
+        }
+      }
+    }
+  }
+
+  let raf = 0
+
+  function init() {
+    cancelAnimationFrame(raf)
+    // Re-query the canvas — after a view transition the old element is gone
+    const el = document.getElementById("dot-matrix") as HTMLCanvasElement | null
+    if (!el) return // this page doesn't have DotMatrix
+    canvas = el
+    ctx = canvas.getContext("2d")!
+    topFill = canvas.dataset.topFill === "true"
+    resize()
+
+    if (reduced) {
+      draw(0)
+      return
+    }
+
+    function loop(time: number) {
+      draw(time)
+      raf = requestAnimationFrame(loop)
+    }
+    raf = requestAnimationFrame(loop)
+  }
+
+  window.addEventListener("resize", resize)
+  // Cancel when navigating away
+  document.addEventListener("astro:before-swap", () => cancelAnimationFrame(raf))
+  // astro:page-load fires on initial load AND every subsequent navigation
+  document.addEventListener("astro:page-load", init)
+</script>
