@@ -10,7 +10,7 @@ import mask from '../content/images/Pabs.png'
 const recentPosts = (await getSortedPosts()).slice(0, 4)
 ---
 
-<Layout topFill={true}>
+<Layout topFill={true} showDotMatrixOnMobile={true}>
   <section class="mt-6 text-muted-foreground">
     <Image src={mask} alt="Pabs Dominguez" width={192} height={192} class="w-24 h-24" />
   </section>

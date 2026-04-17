@@ -20,9 +20,10 @@ interface Props {
   type?: "website" | "article"
   publishedTime?: Date | string
   topFill?: boolean
+  showDotMatrixOnMobile?: boolean
 }
 
-const { title = "Pabs Domínguez", description = "Product Design Lead", image, type = "website", publishedTime, topFill = false } = Astro.props
+const { title = "Pabs Domínguez", description = "Product Design Lead", image, type = "website", publishedTime, topFill = false, showDotMatrixOnMobile = false } = Astro.props
 const pathname = Astro.url.pathname
 const canonicalUrl = new URL(pathname, Astro.site ?? "https://pabsdominguez.com")
 const ogImageUrl = image ?? new URL("/favicons/web-app-manifest-512x512.png", Astro.site ?? "https://pabsdominguez.com").toString()
@@ -141,7 +142,7 @@ const jsonLd = type === "article" ? articleSchema : websiteSchema
     <slot name="head" />
   </head>
   <body>
-    <DotMatrix topFill={topFill} />
+    <DotMatrix topFill={topFill} showOnMobile={showDotMatrixOnMobile} />
     <div class="mx-auto flex min-h-screen max-w-2xl flex-col px-5 md:px-0 relative z-10">
       <Header pathname={pathname} />
 

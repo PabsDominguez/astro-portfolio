@@ -14,11 +14,12 @@
 
 interface Props {
   topFill?: boolean
+  showOnMobile?: boolean
 }
-const { topFill = false } = Astro.props
+const { topFill = false, showOnMobile = false } = Astro.props
 ---
 
-<canvas id="dot-matrix" aria-hidden="true" data-top-fill={topFill.toString()}></canvas>
+<canvas id="dot-matrix" aria-hidden="true" data-top-fill={topFill.toString()} class:list={[!showOnMobile && "hidden sm:block"]}></canvas>
 
 <style>
   #dot-matrix {
@@ -32,7 +33,7 @@ const { topFill = false } = Astro.props
 </style>
 
 <script>
-  const SPACING = 22
+  const SPACING = 12
   const DOT_RADIUS = 1.2
   const SPEED = 0.0012
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -106,15 +107,24 @@ const { topFill = false } = Astro.props
         const rnd = (hash - Math.floor(hash)) * Math.PI * 0.8
 
         /*
-         * Three sine waves at different angles and speeds, each shifted by
-         * the dot's random offset to break circular interference patterns.
+         * Domain warping: before sampling the waves, displace each dot's
+         * coordinates by a slow-moving circular field (sin/cos pair at the
+         * same frequency keeps the motion rotational rather than drifting).
+         * The three brightness waves travel at ~120° apart so their net
+         * drift cancels out — no persistent left/right/up/down flow.
          */
-        const wave1 = Math.sin(x * 0.007 + y * 0.010 - time * SPEED + rnd)
-        const wave2 = Math.sin(x * 0.011 - y * 0.006 + time * SPEED * 0.8 + rnd * 0.7)
-        const wave3 = Math.sin(x * 0.004 + y * 0.013 - time * SPEED * 0.5 + rnd * 1.3)
+        const warpX = Math.sin(x * 0.005 + y * 0.004 - time * SPEED * 0.22) * 42
+        const warpY = Math.cos(x * 0.004 - y * 0.005 + time * SPEED * 0.22) * 42
+        const wx = x + warpX
+        const wy = y + warpY
+
+        // 120° spacing: right (0°), upper-left (120°), lower-left (240°)
+        const wave1 = Math.sin( wx * 0.010                    - time * SPEED        + rnd)
+        const wave2 = Math.sin(-wx * 0.005 + wy * 0.0087 - time * SPEED * 0.95 + rnd * 0.7)
+        const wave3 = Math.sin(-wx * 0.005 - wy * 0.0087 - time * SPEED * 0.85 + rnd * 1.3)
         // t ranges 0→1. Squaring it makes the "off" state last longer.
         const t = Math.pow((wave1 + wave2 + wave3 + 3) / 6, 2)
-        const baseOpacity = theme === "light" ? t * 0.55 : theme === "dark" ? t * 0.35 : t * 0.65
+        const baseOpacity = theme === "light" ? t * 0.55 : theme === "dark" ? t * 0.35 : t * 0.8
 
         const opacity = baseOpacity * mask
         // Centre dot
