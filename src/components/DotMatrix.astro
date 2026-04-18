@@ -33,9 +33,9 @@ const { topFill = false, showOnMobile = false } = Astro.props
 </style>
 
 <script>
-  const SPACING = 12
-  const DOT_RADIUS = 1.2
-  const SPEED = 0.0012
+  const SPACING = 16
+  const DOT_RADIUS = 1.8
+  const SPEED = 0.001
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
   // Smooth 0→1 transition between edge and centre
@@ -119,25 +119,37 @@ const { topFill = false, showOnMobile = false } = Astro.props
         const wy = y + warpY
 
         // 120° spacing: right (0°), upper-left (120°), lower-left (240°)
-        const wave1 = Math.sin( wx * 0.010                    - time * SPEED        + rnd)
-        const wave2 = Math.sin(-wx * 0.005 + wy * 0.0087 - time * SPEED * 0.95 + rnd * 0.7)
-        const wave3 = Math.sin(-wx * 0.005 - wy * 0.0087 - time * SPEED * 0.85 + rnd * 1.3)
-        // t ranges 0→1. Squaring it makes the "off" state last longer.
-        const t = Math.pow((wave1 + wave2 + wave3 + 3) / 6, 2)
-        const baseOpacity = theme === "light" ? t * 0.55 : theme === "dark" ? t * 0.35 : t * 0.8
+        const wave1 = Math.sin( wx * 0.006                    - time * SPEED        + rnd)
+        const wave2 = Math.sin(-wx * 0.003 + wy * 0.0052 - time * SPEED * 0.95 + rnd * 0.7)
+        const wave3 = Math.sin(-wx * 0.003 - wy * 0.0052 - time * SPEED * 0.85 + rnd * 1.3)
+        // t ranges 0→1. Cubing it makes bright peaks stay bright but keeps
+        // most dots near-invisible, creating larger voids between clusters.
+        const t = Math.pow((wave1 + wave2 + wave3 + 3) / 6, 3)
+        const baseOpacity = theme === "light" ? t * 0.55 : theme === "dark" ? t * 0.45 : t * 0.8
 
         const opacity = baseOpacity * mask
+
+        // ~20% of dots get a slowly rotating hue (dark mode only).
+        // dotFraction reuses the hash already computed above.
+        const dotFraction = hash - Math.floor(hash)
+        const isColorDot = (theme === "dark" || theme === "light") && dotFraction < 0.2
+        const dotColor = isColorDot
+          ? `hsla(${(time * 0.018 + dotFraction * 360) % 360}, 100%, 65%, ${Math.min(opacity * 1.5, 1)})`
+          : `rgba(${r},${g},${b},${opacity})`
+
         // Centre dot
         ctx.beginPath()
         ctx.arc(x, y, DOT_RADIUS, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(${r},${g},${b},${opacity})`
+        ctx.fillStyle = dotColor
         ctx.fill()
 
         // Star arms: only grow in when dot is near peak (t > 0.75)
         // Arms are diagonal (×) so they stand out against the grid axes
         if (t > 0.75) {
           const armLength = DOT_RADIUS * 4 * ((t - 0.75) / 0.25)
-          ctx.strokeStyle = `rgba(${r},${g},${b},${opacity * 0.5})`
+          ctx.strokeStyle = isColorDot
+            ? `hsla(${(time * 0.018 + dotFraction * 360) % 360}, 100%, 65%, ${Math.min(opacity * 1.5, 1) * 0.5})`
+            : `rgba(${r},${g},${b},${opacity * 0.5})`
           ctx.lineWidth = 0.6
           ctx.beginPath()
           ctx.moveTo(x - armLength, y - armLength)
