@@ -22,16 +22,6 @@ const recentPosts = (await getSortedPosts()).slice(0, 4)
     
   </section>
 
-  <!-- <section class="mt-20 sm:mt-24">
-    <h3 class="mb-4 font-medium">Now</h3>
-    <p class="text-stone-700 dark:text-stone-300">
-      Currently working on making prediction markets social with <a
-        href="https://bracky.app/home"
-        class="underline underline-offset-4">Bracky</a
-      >.
-    </p>
-  </section> -->
-
   <section class="mt-20 sm:mt-24">
     <h3 class="mb-5 font-medium">Writing</h3>
     <ul class="space-y-2">
@@ -46,6 +36,8 @@ const recentPosts = (await getSortedPosts()).slice(0, 4)
 
   <section class="mt-10 sm:mt-14">
     <h3 class="mb-4 font-medium">Projects</h3>
-    <Projects />
+    <p class="text-stone-700 dark:text-stone-300">Coming soon...</p>
+    <p class="mt-2 text-sm text-muted-foreground">In the meantime, <a href="/writing" class="text-sm underline underline-offset-4 text-muted-foreground hover:text-brand">Browse some earlier work →</a> </p>
+    <!-- <Projects /> -->
   </section>
 </Layout>

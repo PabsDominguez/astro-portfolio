@@ -1,9 +1,13 @@
 ---
 const experiences = [
-  { title: "Bracket, Cofounder & CTO", start: "2023", end: "Now", href: "https://bracky.app/home" },
-  { title: "Worldcoin, Sr. Software Engineer", start: "2022", end: "2023", href: "https://world.org" },
-  { title: "GEHC, Sr. Software Engineer", start: "2020", end: "2022", href: "https://gehealthcare.com" },
-  { title: "GE, Software Engineer (DTLP)", start: "2018", end: "2020", href: "https://www.ge.com" },
+  { title: "Just Eat, Product Design Team Lead", start: "2019", end: "Now", href: "https://justeattakeaway.com/" },
+  { title: "Just Eat, Sr Product Designer", start: "2015", end: "2019", href: "https://justeattakeaway.com/" },
+  { title: "Nerv, Lead UX Designer", start: "2014", end: "2015", href: "https://www.linkedin.com/company/nerv/" },
+  { title: "11870, Product Design Lead", start: "2011", end: "2012", href: "https://www.crunchbase.com/organization/11870-com" },
+  { title: "Caixabank Wealth Management, Web Design Manager", start: "2003", end: "2011", href: "https://www.caixabankwealthmanagement.lu/home_en.html" },
+  { title: "Caixabank, Web Design Team Lead", start: "2001", end: "2003", href: "https://www.caixabank.es/particular/holabank/online-banking.html" },
+  { title: "Netfinger, Web Designer", start: "2099", end: "2001", href: "" },
+
 ]
 ---
 
@@ -18,7 +22,7 @@ const experiences = [
       >
         <div class="flex justify-between border-b border-dotted border-muted-foreground/40">
           <span>{title}</span>
-          <span class="whitespace-nowrap text-left font-mono text-muted-foreground">{`${start} ~ ${end}`}</span>
+          <span class="whitespace-nowrap text-left text-xs font-mono text-muted-foreground">{`${start} ~ ${end}`}</span>
         </div>
       </a>
     </li>

@@ -34,7 +34,7 @@ const { topFill = false, showOnMobile = false } = Astro.props
 
 <script>
   const SPACING = 16
-  const DOT_RADIUS = 1.8
+  const DOT_RADIUS = 2
   const SPEED = 0.001
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
@@ -72,18 +72,23 @@ const { topFill = false, showOnMobile = false } = Astro.props
 
     const halfW = canvas.width / 2
 
+    // Compute the content column edge as a fraction of halfW so dots never
+    // overlap text. max-w-2xl = 42rem; at 18px base that's 756px (378 each side).
+    // px-5 adds ~22px padding on sm screens before the md:px-0 kicks in.
+    const contentHalfPx = Math.min((canvas.width - 44) / 2, 378)
+    const contentEdge = contentHalfPx / halfW
+
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         const x = col * SPACING
         const y = row * SPACING
 
         /*
-         * Horizontal mask: 0 in the content column, 1 at the edges.
-         * normX = 0 at centre, 1 at edge.
-         * Dots start appearing at 40% out from the centre (60% from edge).
+         * Horizontal mask: dots only appear outside the content column.
+         * contentEdge is computed dynamically so narrow screens stay clear.
          */
         const normX = Math.abs(x - halfW) / halfW
-        const hMask = smoothstep(0.30, 0.42, normX)
+        const hMask = smoothstep(contentEdge + 0.02, contentEdge + 0.10, normX)
 
         /*
          * Vertical mask (topFill only): fully visible at the top of the
@@ -132,7 +137,7 @@ const { topFill = false, showOnMobile = false } = Astro.props
         // ~20% of dots get a slowly rotating hue (dark mode only).
         // dotFraction reuses the hash already computed above.
         const dotFraction = hash - Math.floor(hash)
-        const isColorDot = (theme === "dark" || theme === "light") && dotFraction < 0.2
+        const isColorDot = (theme === "dark" || theme === "light") && dotFraction < 0.5
         const dotColor = isColorDot
           ? `hsla(${(time * 0.018 + dotFraction * 360) % 360}, 100%, 65%, ${Math.min(opacity * 1.5, 1)})`
           : `rgba(${r},${g},${b},${opacity})`
@@ -143,19 +148,19 @@ const { topFill = false, showOnMobile = false } = Astro.props
         ctx.fillStyle = dotColor
         ctx.fill()
 
-        // Star arms: only grow in when dot is near peak (t > 0.75)
-        // Arms are diagonal (×) so they stand out against the grid axes
+        // Cross arms: only grow in when dot is near peak (t > 0.75)
+        // Arms are axis-aligned (+) so they point toward neighbouring dots
         if (t > 0.75) {
-          const armLength = DOT_RADIUS * 4 * ((t - 0.75) / 0.25)
+          const armLength = DOT_RADIUS * 20 * ((t - 0.75) / 0.25)
           ctx.strokeStyle = isColorDot
             ? `hsla(${(time * 0.018 + dotFraction * 360) % 360}, 100%, 65%, ${Math.min(opacity * 1.5, 1) * 0.5})`
             : `rgba(${r},${g},${b},${opacity * 0.5})`
           ctx.lineWidth = 0.6
           ctx.beginPath()
-          ctx.moveTo(x - armLength, y - armLength)
-          ctx.lineTo(x + armLength, y + armLength)
-          ctx.moveTo(x + armLength, y - armLength)
-          ctx.lineTo(x - armLength, y + armLength)
+          ctx.moveTo(x - armLength, y)
+          ctx.lineTo(x + armLength, y)
+          ctx.moveTo(x, y - armLength)
+          ctx.lineTo(x, y + armLength)
           ctx.stroke()
         }
       }
